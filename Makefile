@@ -25,7 +25,7 @@ BUILD_FILES=glauth.go bindata.go ldapbackend.go webapi.go configbackend.go
 run: setup devrun cleanup
 
 # Run the integration test on linux64 (eventually allow the binary to be set)
-test: runtest
+test: runintegrationtest bindata rununittest
 
 # Run build process for all binaries
 all: setup binaries verify cleanup
@@ -44,9 +44,11 @@ setup: bindata format
 #####################
 
 # Run integration test
-runtest:
+runintegrationtest:
 	./scripts/travis/integration-test.sh cleanup
 
+rununittest:
+	go test
 
 
 bindata:

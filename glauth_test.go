@@ -9,7 +9,8 @@ import (
 func TestGetVersionString(t *testing.T) {
 
 	// Setup config and check output
-	LastGitTag = "7"
+
+	LastGitTag = "v1.2.5"
 	BuildTime = "20180616_042045Z"
 	GitCommit = "a9837f3112fc049fd1e9faca6f56d8be1bec91bd"
 	GitClean = "1"
@@ -17,7 +18,13 @@ func TestGetVersionString(t *testing.T) {
 	GitTagIsCommit = "0"
 
 	versionOutput := getVersionString()
-	if versionOutput != "7" {
+
+        var expectedOutput string = "test"
+
+
+	if versionOutput == expectedOutput {
+	        fmt.Println(expectedOutput)
+	} else {
 		t.Errorf("Finish writing this test, output was: %s", versionOutput)
 	}
 
