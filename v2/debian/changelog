@@ -1,0 +1,6 @@
+glauth (2.1.0) UNRELEASED; urgency=medium
+
+  [ yvesago ]
+  * Initial release.
+
+ -- yvesago <yves.github@yvesago.net>  Tue, 05 Jul 2022 21:53:26 +0100

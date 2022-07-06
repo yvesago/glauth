@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+
+DISTRIBUTION = "static"
+VERSION = 2.1.0
+PACKAGEVERSION = $(VERSION)-0~$(DISTRIBUTION)0
+
+%:
+	dh $@ --with quilt
+
+override_dh_auto_build:
+override_dh_auto_test:
+override_dh_installdocs:
+override_dh_auto_install:
+	$(MAKE) install DESTDIR=debian/glauth
+
+override_dh_installsystemd:
+	dh_installsystemd --name=glauth
+
+override_dh_gencontrol:
+	dh_gencontrol -- -v$(PACKAGEVERSION)
+

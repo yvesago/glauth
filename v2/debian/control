@@ -1,0 +1,10 @@
+Source: glauth
+Maintainer: YvesAgo <yves+github@yvesago.net>
+Build-Depends: debhelper (>= 11)
+
+Package: glauth
+Architecture: amd64
+Depends: adduser
+Description: glauth v2 ldap server
+ Go-lang LDAP Authentication (GLAuth) is a secure, easy-to-use, LDAP server 
+ https://github.com/glauth/glauth

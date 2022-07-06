@@ -1,0 +1,45 @@
+--- a/Makefile
++++ b/Makefile
+@@ -1,3 +1,7 @@
++
++export GOROOT = /snap/go/current
++export GOBIN = /snap/go/current/bin/go
++
+ VERSION=$(shell bin/linuxamd64/glauth --version)
+ 
+ GIT_COMMIT=$(shell git rev-list -1 HEAD )
+@@ -43,6 +47,8 @@
+ # Setup commands to always run
+ setup: getdeps format
+ 
++install: setup linuxamd64
++
+ #####################
+ # Subcommands
+ #####################
+@@ -53,13 +59,13 @@
+ 
+ # Get all dependencies
+ getdeps:
+-	go get -d ./...
++	${GOBIN} get -d ./...
+ 
+ updatetest:
+ 	./scripts/ci/integration-test.sh
+ 
+ format:
+-	go fmt
++	${GOBIN} fmt
+ 
+ devrun:
+ 	go run ${BUILD_FILES} -c sample-simple.cfg
+@@ -68,7 +74,8 @@
+ 	mkdir -p bin/$@ && GOOS=linux GOARCH=386 go build ${TRIM_FLAGS} -ldflags "${BUILD_VARS}" -o bin/$@/glauth ${BUILD_FILES} && cd bin/$@ && sha256sum glauth > glauth.sha256
+ 
+ linuxamd64:
+-	mkdir -p bin/$@ && GOOS=linux GOARCH=amd64 go build ${TRIM_FLAGS} -ldflags "${BUILD_VARS}" -o bin/$@/glauth ${BUILD_FILES} && cd bin/$@ && sha256sum glauth > glauth.sha256
++	#mkdir -p $(DESTDIR)/bin/$@ && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ${GOBIN} build ${TRIM_FLAGS} -ldflags "${BUILD_VARS}" -o $(DESTDIR)/bin/$@/glauth ${BUILD_FILES} && cd $(DESTDIR)/bin/$@ && sha256sum glauth > glauth.sha256
++	mkdir -p $(DESTDIR)/usr/bin/ && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 ${GOBIN} build ${TRIM_FLAGS} -ldflags "${BUILD_VARS}" -o $(DESTDIR)/usr/bin/glauth ${BUILD_FILES}
+ 
+ linuxarm:
+ 	mkdir -p bin/$@ && GOOS=linux GOARCH=arm go build ${TRIM_FLAGS} -ldflags "${BUILD_VARS}" -o bin/$@/glauth ${BUILD_FILES} && cd bin/$@ && sha256sum glauth > glauth.sha256

@@ -1,0 +1,12 @@
+[Unit]
+Description=Ldap Glauth
+After=network.target
+
+[Service]
+Type=simple
+User=glauth
+ExecStart=/usr/bin/nohup /usr/bin/glauth -c /etc/glauth/sample-simple.cfg
+
+[Install]
+WantedBy=multi-user.target
+
